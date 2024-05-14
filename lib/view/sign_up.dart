@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do/app/routes.dart';
@@ -89,6 +90,13 @@ class _SignUpViewState extends State<SignUpView> {
                           email: _email.text,
                           password: _password.text,
                         );
+                        await FirebaseFirestore.instance
+                            .collection('userInfo')
+                            .doc(AuthService.firebase().uid)
+                            .set({
+                          'name': _name.text,
+                          'email': _email.text,
+                        });
                         if (!context.mounted) return;
                         Navigator.of(context).pushNamedAndRemoveUntil(
                           homeRoute,
