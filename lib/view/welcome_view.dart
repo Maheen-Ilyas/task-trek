@@ -26,7 +26,7 @@ class WelcomeView extends StatelessWidget {
                   color: AppColors.lightGreyText,
                 ),
               ),
-              // const SizedBox(height: 200.0),
+              const Spacer(flex: 6),
               Text(
                 "Productivity is being able to do things that you were never able to do before",
                 style: TextStyle(
@@ -45,13 +45,14 @@ class WelcomeView extends StatelessWidget {
                   color: AppColors.lightGreyText,
                 ),
               ),
-              // const SizedBox(height: 120.0),
+              const Spacer(flex: 3),
               CustomElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(signUpRoute);
                 },
                 buttonText: "Get Started",
               ),
+              const Spacer(),
             ],
           ),
         ),

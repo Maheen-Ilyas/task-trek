@@ -35,68 +35,71 @@ class _SignUpViewState extends State<SignUpView> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
-            child: Column(
-              children: [
-                const Spacer(),
-                Text(
-                  "Sign Up.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize:
-                        Theme.of(context).textTheme.displayMedium?.fontSize,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: GoogleFonts.playfairDisplay().fontFamily,
-                    color: AppColors.lightGreyText,
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  const Spacer(),
+                  Text(
+                    "Sign Up.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize:
+                          Theme.of(context).textTheme.displayMedium?.fontSize,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                      color: AppColors.lightGreyText,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 40.0),
-                CustomFormField(
-                  controller: _name,
-                  keyboardType: TextInputType.text,
-                  obscureText: false,
-                  hintText: "Name",
-                ),
-                const SizedBox(height: 20.0),
-                CustomFormField(
-                  controller: _email,
-                  keyboardType: TextInputType.emailAddress,
-                  obscureText: false,
-                  hintText: "Email",
-                ),
-                const SizedBox(height: 20.0),
-                CustomFormField(
-                  controller: _password,
-                  keyboardType: TextInputType.text,
-                  obscureText: true,
-                  hintText: "Password",
-                ),
-                const SizedBox(height: 10.0),
-                AuthNavigationText(
-                  text: "Already have an account?",
-                  navText: "Sign in here!",
-                  onTap: () {
-                    Navigator.of(context).pushNamed(signInRoute);
-                  },
-                ),
-                const SizedBox(height: 40.0),
-                CustomElevatedButton(
-                  buttonText: "Sign up",
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      await AuthService.firebase().signUp(
-                        email: _email.text,
-                        password: _password.text,
-                      );
-                      if (!context.mounted) return;
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        homeRoute,
-                        (route) => false,
-                      );
-                    }
-                  },
-                ),
-                const Spacer(),
-              ],
+                  const SizedBox(height: 40.0),
+                  CustomFormField(
+                    controller: _name,
+                    keyboardType: TextInputType.text,
+                    obscureText: false,
+                    hintText: "Name",
+                  ),
+                  const SizedBox(height: 20.0),
+                  CustomFormField(
+                    controller: _email,
+                    keyboardType: TextInputType.emailAddress,
+                    obscureText: false,
+                    hintText: "Email",
+                  ),
+                  const SizedBox(height: 20.0),
+                  CustomFormField(
+                    controller: _password,
+                    keyboardType: TextInputType.text,
+                    obscureText: true,
+                    hintText: "Password",
+                  ),
+                  const SizedBox(height: 10.0),
+                  AuthNavigationText(
+                    text: "Already have an account?",
+                    navText: "Sign in here!",
+                    onTap: () {
+                      Navigator.of(context).pushNamed(signInRoute);
+                    },
+                  ),
+                  const SizedBox(height: 40.0),
+                  CustomElevatedButton(
+                    buttonText: "Sign up",
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        await AuthService.firebase().signUp(
+                          email: _email.text,
+                          password: _password.text,
+                        );
+                        if (!context.mounted) return;
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          homeRoute,
+                          (route) => false,
+                        );
+                      }
+                    },
+                  ),
+                  const Spacer(),
+                ],
+              ),
             ),
           ),
         ),

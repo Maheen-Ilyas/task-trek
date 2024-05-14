@@ -24,6 +24,7 @@ class _HomeViewState extends State<HomeView> {
             tooltip: "Settings",
             icon: const Icon(
               Icons.settings_outlined,
+              size: 24.0,
               color: AppColors.lightGreyText,
             ),
           ),
@@ -32,6 +33,7 @@ class _HomeViewState extends State<HomeView> {
             tooltip: "Add Task",
             icon: const Icon(
               Icons.add,
+              size: 24.0,
               color: AppColors.lightGreyText,
             ),
           )
