@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:to_do/services/auth/auth_service.dart';
 import 'package:to_do/utils/theme/app_colors.dart';
 import 'package:to_do/widgets/custom_elevated_button.dart';
 import 'package:to_do/widgets/custom_form_field.dart';
@@ -160,12 +159,7 @@ class _AddTaskState extends State<AddTask> {
                     ),
                     IconButton(
                       onPressed: () async {
-                        final date = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2013),
-                          lastDate: DateTime(2130),
-                        );
+                        final date = await addTaskDatePicker(context);
                         if (date != null) {
                           setState(() {
                             _lastDate.text =
@@ -185,10 +179,7 @@ class _AddTaskState extends State<AddTask> {
                 CustomElevatedButton(
                   buttonText: "Save Task",
                   onPressed: () async {
-                    await FirebaseFirestore.instance
-                        .collection('tasks')
-                        .doc(AuthService.firebase().uid)
-                        .set({
+                    await FirebaseFirestore.instance.collection('tasks').add({
                       'task title': _taskTitle.text,
                       'task': _task.text,
                       'start date': startDate,
@@ -228,5 +219,40 @@ class _AddTaskState extends State<AddTask> {
         ),
       ),
     );
+  }
+
+  Future<DateTime?> addTaskDatePicker(BuildContext context) {
+    return showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(2013),
+        lastDate: DateTime(2130),
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: const ColorScheme.dark(
+                primary: AppColors.darkGreyText,
+                secondary: AppColors.mediumGreyText,
+                tertiary: AppColors.lightGreyText,
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: ButtonStyle(
+                  backgroundColor: const MaterialStatePropertyAll(
+                    AppColors.lightGreyText,
+                  ),
+                  textStyle: MaterialStatePropertyAll(
+                    TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                      color: AppColors.backgroundColor,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            child: child!,
+          );
+        });
   }
 }
