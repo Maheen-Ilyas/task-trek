@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:to_do/controllers/task/task_controller.dart';
 import 'package:to_do/models/task_model.dart';
 import 'package:to_do/utils/theme/app_colors.dart';
 
@@ -8,12 +10,14 @@ class TaskListTile extends StatelessWidget {
   final ValueChanged<bool?> onChanged;
   final VoidCallback onDismissed;
 
-  const TaskListTile({
+  TaskListTile({
     super.key,
     required this.task,
     required this.onChanged,
     required this.onDismissed,
   });
+
+  final TaskController controller = Get.find<TaskController>();
 
   @override
   Widget build(BuildContext context) {
@@ -131,65 +135,62 @@ class TaskListTile extends StatelessWidget {
 
   Future<bool?> showConfirmationDialog(BuildContext context) {
     return showDialog(
-        context: context,
-        builder: (context) {
-          return Theme(
-            data: ThemeData(
-              dialogBackgroundColor: AppColors.backgroundColor,
-              dialogTheme: const DialogTheme(
-                backgroundColor: AppColors.backgroundColor,
+      context: context,
+      builder: (context) {
+        return Theme(
+          data: ThemeData(
+            dialogBackgroundColor: AppColors.backgroundColor,
+            dialogTheme: const DialogTheme(
+              backgroundColor: AppColors.backgroundColor,
+            ),
+          ),
+          child: AlertDialog(
+            shape: ContinuousRectangleBorder(
+              borderRadius: BorderRadius.circular(0),
+            ),
+            title: Text(
+              "Confirm deletion",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.headlineSmall?.fontSize,
+                fontWeight: FontWeight.w600,
+                fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+                color: AppColors.mediumGreyText,
               ),
             ),
-            child: AlertDialog(
-              shape: ContinuousRectangleBorder(
-                borderRadius: BorderRadius.circular(0),
+            content: Text(
+              "Are you sure you want to delete this task?",
+              style: TextStyle(
+                fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                fontFamily: GoogleFonts.poppins().fontFamily,
+                color: AppColors.lightGreyText,
               ),
-              title: Text(
-                "Confirm deletion",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize:
-                      Theme.of(context).textTheme.headlineSmall?.fontSize,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: GoogleFonts.playfairDisplay().fontFamily,
-                  color: AppColors.mediumGreyText,
-                ),
-              ),
-              content: Text(
-                "Are you sure you want to delete this task?",
-                style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
-                  fontFamily: GoogleFonts.poppins().fontFamily,
-                  color: AppColors.lightGreyText,
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(true),
-                  child: Text(
-                    "Yes",
-                    style: TextStyle(
-                      fontSize:
-                          Theme.of(context).textTheme.bodyLarge?.fontSize,
-                      color: AppColors.lightGreyText,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(false),
-                  child: Text(
-                    "Cancel",
-                    style: TextStyle(
-                      fontSize:
-                          Theme.of(context).textTheme.bodyLarge?.fontSize,
-                      color: AppColors.primaryColor,
-                    ),
-                  ),
-                ),
-              ],
             ),
-          );
-        },
-      );
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(result: true),
+                child: Text(
+                  "Yes",
+                  style: TextStyle(
+                    fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                    color: AppColors.lightGreyText,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () => Get.back(result: false),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(
+                    fontSize: Theme.of(context).textTheme.bodyLarge?.fontSize,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

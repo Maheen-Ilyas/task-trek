@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do/app/routes.dart';
 import 'package:to_do/utils/theme/app_colors.dart';
@@ -47,9 +48,7 @@ class WelcomeView extends StatelessWidget {
               ),
               const Spacer(flex: 3),
               CustomElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(signUpRoute);
-                },
+                onPressed: () => Get.toNamed(signUpRoute),
                 buttonText: "Get Started",
               ),
               const Spacer(),
