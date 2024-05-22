@@ -6,9 +6,14 @@ import 'package:to_do/view/home_view.dart';
 import 'package:to_do/view/sign_in.dart';
 import 'package:to_do/view/sign_up.dart';
 import 'package:get/get.dart';
+import 'package:to_do/view/welcome_view.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final bool isFirstTime;
+  const MyApp({
+    super.key,
+    required this.isFirstTime,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +24,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: AppColors.backgroundColor,
       ),
-      initialRoute: welcomeRoute,
       getPages: [
         GetPage(name: signUpRoute, page: () => const SignUpView()),
         GetPage(name: signInRoute, page: () => const SignInView()),
         GetPage(name: homeRoute, page: () => HomeView()),
         GetPage(name: addTaskRoute, page: () => const AddTask()),
       ],
+      home: isFirstTime ? const WelcomeView() : HomeView(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:to_do/controllers/task/task_controller.dart';
 import 'package:to_do/utils/theme/app_colors.dart';
 import 'package:to_do/widgets/build_label.dart';
@@ -66,24 +67,20 @@ class _AddTaskState extends State<AddTask> {
                 const SizedBox(height: 20.0),
                 const BuildLabel(title: "Start Date"),
                 const SizedBox(height: 10.0),
-                Obx(
-                  () => CustomFormField(
-                    hintText: controller.startDateValue.value,
-                    controller: controller.startDate,
-                    obscureText: false,
-                    readOnly: true,
-                  ),
+                CustomFormField(
+                  hintText: controller.startDateValue,
+                  controller: controller.startDate,
+                  obscureText: false,
+                  readOnly: true,
                 ),
                 const SizedBox(height: 20.0),
                 const BuildLabel(title: "Time"),
                 const SizedBox(height: 10.0),
-                Obx(
-                  () => CustomFormField(
-                    hintText: controller.currentTimeValue.value,
-                    controller: controller.currentTime,
-                    obscureText: false,
-                    readOnly: true,
-                  ),
+                CustomFormField(
+                  hintText: controller.currentTimeValue,
+                  controller: controller.currentTime,
+                  obscureText: false,
+                  readOnly: true,
                 ),
                 const SizedBox(height: 20.0),
                 const BuildLabel(title: "Deadline"),
@@ -91,19 +88,20 @@ class _AddTaskState extends State<AddTask> {
                 Row(
                   children: [
                     Expanded(
-                      child: Obx(
-                        () => CustomFormField(
-                          hintText: "Last Date",
-                          controller: controller.lastDate,
-                          obscureText: false,
-                        ),
+                      child: CustomFormField(
+                        hintText: "Last Date",
+                        controller: controller.lastDate,
+                        obscureText: false,
                       ),
                     ),
                     IconButton(
                       onPressed: () async {
                         final date = await addTaskDatePicker(context);
                         if (date != null) {
-                          controller.updateLastDate(date);
+                          setState(() {
+                            controller.lastDate.text =
+                                DateFormat('MMMM dd, yyyy').format(date);
+                          });
                         }
                       },
                       icon: const Icon(

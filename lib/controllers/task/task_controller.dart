@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do/models/task_model.dart';
+import 'package:to_do/utils/theme/app_colors.dart';
 
 class TaskController extends GetxController {
   var tasks = <Task>[].obs;
@@ -12,9 +14,8 @@ class TaskController extends GetxController {
   final TextEditingController currentTime = TextEditingController();
   final TextEditingController lastDate = TextEditingController();
 
-  var startDateValue = DateFormat('MMMM dd, yyyy').format(DateTime.now()).obs;
-  var currentTimeValue =
-      DateFormat('hh:mm a').format(DateTime.now().toLocal()).obs;
+  var startDateValue = DateFormat('MMMM dd, yyyy').format(DateTime.now());
+  var currentTimeValue = DateFormat('hh:mm a').format(DateTime.now().toLocal());
   var lastDateValue = DateFormat('MMMM dd').format(DateTime.now()).obs;
 
   @override
@@ -33,43 +34,43 @@ class TaskController extends GetxController {
     super.onClose();
   }
 
-  void updateLastDate(DateTime date) {
-    lastDateValue.value = DateFormat('MMMM dd, yyyy').format(date);
-    lastDateValue = lastDateValue.value as RxString;
-  }
-
   Future<void> saveTask() async {
-    try {
-      await FirebaseFirestore.instance.collection('tasks').add({
-        'task title': taskTitle.text,
-        'task': task.text,
-        'start date': startDateValue.value,
-        'time': currentTimeValue.value,
-        'deadline': lastDateValue.value,
-      });
-      Get.snackbar(
-        "Success",
+    await FirebaseFirestore.instance.collection('tasks').add({
+      'task title': taskTitle.text,
+      'task': task.text,
+      'start date': startDateValue,
+      'time': currentTimeValue,
+      'deadline': lastDateValue.value,
+    });
+    Get.snackbar(
+      '',
+      '',
+      backgroundColor: AppColors.lightGreyText,
+      titleText: Text(
+        'Success',
+        style: TextStyle(
+          fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+          fontSize: 22.0,
+          fontWeight: FontWeight.bold,
+          color: AppColors.backgroundColor,
+        ),
+      ),
+      messageText: Text(
         "Task added successfully!",
-        colorText: Colors.white,
-        backgroundColor: Colors.green,
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 2),
-        isDismissible: true,
-        margin: const EdgeInsets.all(8.0),
-      );
-      Get.back();
-    } catch (e) {
-      Get.snackbar(
-        "Error",
-        e.toString(),
-        colorText: Colors.white,
-        backgroundColor: Colors.red,
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 2),
-        isDismissible: true,
-        margin: const EdgeInsets.all(8.0),
-      );
-    }
+        style: TextStyle(
+          fontFamily: GoogleFonts.poppins().fontFamily,
+          fontSize: 18.0,
+          fontWeight: FontWeight.w500,
+          color: AppColors.backgroundColor,
+        ),
+      ),
+    );
+    taskTitle.clear();
+    task.clear();
+    startDate.clear();
+    currentTime.clear();
+    lastDate.clear();
+    Get.back();
   }
 
   void loadTasks() {

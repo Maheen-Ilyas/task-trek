@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do/app/routes.dart';
 import 'package:to_do/utils/theme/app_colors.dart';
 import 'package:to_do/widgets/custom_elevated_button.dart';
@@ -48,7 +49,12 @@ class WelcomeView extends StatelessWidget {
               ),
               const Spacer(flex: 3),
               CustomElevatedButton(
-                onPressed: () => Get.toNamed(signUpRoute),
+                onPressed: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setBool('isFirstTime', false);
+                  Get.toNamed(signUpRoute);
+                },
                 buttonText: "Get Started",
               ),
               const Spacer(),

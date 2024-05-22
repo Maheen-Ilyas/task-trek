@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:to_do/app/routes.dart';
 import 'package:to_do/services/auth/auth_service.dart';
+import 'package:to_do/utils/theme/app_colors.dart';
 
 class SignInController extends GetxController {
   final TextEditingController email = TextEditingController();
@@ -24,7 +26,29 @@ class SignInController extends GetxController {
         );
         Get.offAllNamed(homeRoute);
       } catch (e) {
-        Get.snackbar('Error', e.toString());
+        Get.snackbar(
+          '',
+          '',
+          backgroundColor: AppColors.lightGreyText,
+          titleText: Text(
+            'Error',
+            style: TextStyle(
+              fontFamily: GoogleFonts.playfairDisplay().fontFamily,
+              fontSize: 22.0,
+              fontWeight: FontWeight.bold,
+              color: AppColors.backgroundColor,
+            ),
+          ),
+          messageText: Text(
+            e.toString(),
+            style: TextStyle(
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+              color: AppColors.backgroundColor,
+            ),
+          ),
+        );
       }
     }
   }
