@@ -17,7 +17,7 @@ class HomeView extends StatelessWidget {
         backgroundColor: AppColors.transparent,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => Get.toNamed(settingsRoute),
             tooltip: "Settings",
             icon: const Icon(
               Icons.settings_outlined,

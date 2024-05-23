@@ -48,6 +48,9 @@ class _TaskListState extends State<TaskList> {
                   );
                 },
                 onDismissed: () {
+                  setState(() {
+                    controller.tasks.removeAt(index);
+                  });
                   controller.deleteTask(controller.tasks[index].id);
                 },
               );

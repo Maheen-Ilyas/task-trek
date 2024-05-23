@@ -3,6 +3,7 @@ import 'package:to_do/app/routes.dart';
 import 'package:to_do/utils/theme/app_colors.dart';
 import 'package:to_do/view/add_task.dart';
 import 'package:to_do/view/home_view.dart';
+import 'package:to_do/view/settings.dart';
 import 'package:to_do/view/sign_in.dart';
 import 'package:to_do/view/sign_up.dart';
 import 'package:get/get.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: signInRoute, page: () => const SignInView()),
         GetPage(name: homeRoute, page: () => HomeView()),
         GetPage(name: addTaskRoute, page: () => const AddTask()),
+        GetPage(name: settingsRoute, page: () => const Settings()),
       ],
       home: isFirstTime ? const WelcomeView() : HomeView(),
     );

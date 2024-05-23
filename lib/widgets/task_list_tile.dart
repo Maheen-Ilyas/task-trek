@@ -38,7 +38,7 @@ class TaskListTile extends StatelessWidget {
         return await showConfirmationDialog(context);
       },
       onDismissed: (direction) {
-        onDismissed;
+        onDismissed();
       },
       child: Column(
         children: [

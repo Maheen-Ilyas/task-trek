@@ -1,3 +1,10 @@
 {
-    "java.compile.nullAnalysis.mode": "automatic"
+    "java.compile.nullAnalysis.mode": "automatic",
+    "cSpell.words": [
+        "adipiscing",
+        "amet",
+        "Appearence",
+        "consectetur",
+        "elit"
+    ]
 }
