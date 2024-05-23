@@ -94,7 +94,7 @@ class Settings extends StatelessWidget {
                 child: Column(
                   children: [
                     SettingItemTile(
-                      onTap: () {},
+                      onTap: () => AuthService.firebase().deleteAccount(),
                       title: "Delete Account",
                       titleColor: AppColors.primaryColor,
                       subTitle:
@@ -114,8 +114,8 @@ class Settings extends StatelessWidget {
                       color: AppColors.mediumGreyText.withOpacity(0.5),
                     ),
                     SettingItemTile(
-                      onTap: () {},
-                      title: "Log out",
+                      onTap: () => AuthService.firebase().signOut(),
+                      title: "Sign out",
                       titleColor: AppColors.lightGreyText,
                       subTitle:
                           "Lorem ipsum dolor sit amet, consectetur adipiscing elit",

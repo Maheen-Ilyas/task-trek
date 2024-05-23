@@ -33,4 +33,7 @@ class AuthService implements AuthProvider {
 
   @override
   String? get uid => provider.uid;
+
+  @override
+  Future<void> deleteAccount() => provider.deleteAccount();
 }

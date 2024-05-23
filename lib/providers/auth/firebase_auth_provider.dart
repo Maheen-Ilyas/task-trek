@@ -103,4 +103,14 @@ class FirebaseAuthProvider implements AuthProvider {
       return null;
     }
   }
+
+  @override
+  Future<void> deleteAccount() {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      return user.delete();
+    } else {
+      throw UserDoesNotExistException();
+    }
+  }
 }
